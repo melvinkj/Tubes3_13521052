@@ -5,9 +5,11 @@ import Levensthein from "./levensthein.js";
 import Randomize from "./randomize.js";
 import {Array} from "./struct/Array.js";
 
+// var x = new Calculator();
+// console.log(x.evaluate("1+2+3"));
+
 // var x = new Randomize();
 // var y = new Array([1,2,3,4,5,6,7,8]);
-
 // console.log(x.pick(5, ["eugene", "yap", "jin", "quan"], 4));
 
 // var x = new Calendar;
