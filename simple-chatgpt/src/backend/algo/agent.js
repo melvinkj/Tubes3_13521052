@@ -6,6 +6,27 @@ import Levensthein from "./levensthein.js";
 import Randomize from "./randomize.js";
 import {Array} from "./struct/Array.js";
 
+export default class Agent {
+    constructor(text) {
+        this.prompt = String(text);
+    }
+
+    process() {
+        let tool;
+        console.log()
+        if (this.prompt.search(/\bhitung/i, ) != -1) {
+            tool = new Calculator();
+            return tool.evaluate(this.prompt.substring(this.prompt.search(/\bhitung/i) + 6))
+        } else {
+            return "Masukkan tidak valid";
+        }
+    }
+}
+
+
+let agent = new Agent("hitung 3 + 1/(7 + 1/(15 + 1/(1 + 1/(292 + 1/(1 + 1/(1 + 1/1))))))");
+console.log(agent.process());
+
 // var x = new Calculator();
 // console.log(x.evaluate("1+2+3"));
 
@@ -22,5 +43,5 @@ import {Array} from "./struct/Array.js";
 // var x = new KMP()
 // console.log(x.calculate("ABABDABACDABABCABAB", "ABABCABAB"))
 
-var x = new BoyerMoore()
-console.log(x.calculate("ABAAABCD", "ABC"))
+// var x = new BoyerMoore()
+// console.log(x.calculate("ABAAABCD", "ABC"))

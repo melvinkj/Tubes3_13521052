@@ -98,7 +98,6 @@ export default class Calculator {
                 }
                 if (this.bracket.length() == 0) {
                     let newstack = new Calculator();
-                    console.log(subtext);
                     this.number.push(newstack.evaluate(subtext));
                     if (currentIndex < textlength && "1234567890".indexOf(strtext[currentIndex]) != -1) {
                         this.operator.push("*");
@@ -108,9 +107,6 @@ export default class Calculator {
                 }
             }
         }
-
-        console.log(this.number.toString());
-        console.log(this.operator.toString());
 
         if (this.number.length() != this.operator.length() + 1) {
             return NaN;
