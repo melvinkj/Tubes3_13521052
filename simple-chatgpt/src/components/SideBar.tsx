@@ -24,10 +24,11 @@ function SideBar() {
 
                 <div>
                     {/* Map through the chat rows */}
-                    {chats?.docs.map(chat => (
+                    
+                    {/* {chats?.docs.map(chat => (
                         <ChatRow key={chat.id} id={chat.id} />
-                    ))}
-
+                    ))} */}
+                    {/* chore: update chat view from db */}
                 </div>
             </div>           
         </div>
@@ -35,6 +36,7 @@ function SideBar() {
                 <img 
                 onClick={()=> signOut()}
                 src={session.user?.image!}
+                // chore: placeholder for empty image
                 alt="Profile pic" 
                 className="h-12 w-12 rounded-full cursor-pointer mx-auto mb-2 hover:opacity-50" />   
         )}
