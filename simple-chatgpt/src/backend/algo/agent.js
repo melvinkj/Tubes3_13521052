@@ -1,3 +1,4 @@
+import BoyerMoore from "./bm.js";
 import Calculator from "./calculator.js";
 import Calendar from "./date.js";
 import KMP from "./kmp.js";
@@ -18,6 +19,8 @@ import {Array} from "./struct/Array.js";
 // var x = new Levensthein();
 // console.log(x.calculate("Bagaimana caranya menjadi seorang", "Bagaimana caranya menjadi seekor"))
 
-var x = new KMP()
+// var x = new KMP()
+// console.log(x.calculate("ABABDABACDABABCABAB", "ABABCABAB"))
 
-console.log(x.calculate("ABABDABACDABABCABAB", "ABABCABAB"))
+var x = new BoyerMoore()
+console.log(x.calculate("ABAAABCD", "ABC"))

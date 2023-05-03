@@ -31,9 +31,9 @@ export default class KMP {
     
     calculate(text, pattern) {
         let textInput = String(text),
-        textLength = textInput.length,
-        patternInput = String(pattern),
-        patternLength = patternInput.length;
+            textLength = textInput.length,
+            patternInput = String(pattern),
+            patternLength = patternInput.length;
 
         this.reinitializeTable(patternInput, patternLength);
 
