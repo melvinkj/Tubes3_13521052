@@ -9,14 +9,9 @@ export async function GET(req: Request) {
 export async function POST(req: Request) {
     console.log("POST API")
     // const session = getServerSession();
-    const newChat = db.chat.create({
+    const newChat = await db.chat.create({
         data: {
             topic: "New Topic",
-            UserChats: {
-                create: {
-                    userId: "clh7d9gwc0000ulpc40fvq2qa"
-                }
-            }
         }
     })
     const question = db.qnADataset.findFirst()
