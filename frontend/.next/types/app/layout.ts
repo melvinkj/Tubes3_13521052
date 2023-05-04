@@ -1,4 +1,4 @@
-// File: C:\Users\User\Documents\Code\Semester 4\IF2211\Tugas Besar 3\Tubes3_13521052\frontend\src\app\layout.tsx
+// File: C:\Users\melvi\Documents\Tubes Stima 3\Tubes3_13521052\frontend\src\app\layout.tsx
 import * as entry from '../../../src/app/layout.js'
 import type { ResolvingMetadata } from 'next/dist/lib/metadata/types/metadata-interface.js'
 
