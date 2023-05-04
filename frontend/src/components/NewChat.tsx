@@ -4,7 +4,7 @@ import { PlusIcon } from "@heroicons/react/24/solid";
 import { useRouter } from "next/navigation";
 // import prisma from "../lib/prisma"
 import { db } from "../lib/prisma";
-
+import supabase from "../../supabase";
 function NewChat() {
   const router = useRouter();
   // const {data: session} = useSession();
@@ -13,8 +13,10 @@ function NewChat() {
         // const doc = await add();
         // const data = await db.chat.findFirst()
         const data = await fetch('api/chats', {
-          method: "POST"
+          method: "POST",
         })
+        // const data = await supabase.from("Chat").insert({topic: "New Topic"})
+        console.log("something")
     }
   // Execute createNewChat only on the client-side
   if (typeof window !== 'undefined') {
