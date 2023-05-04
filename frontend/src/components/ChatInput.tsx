@@ -2,7 +2,6 @@
 
 import { PaperAirplaneIcon } from "@heroicons/react/24/solid";
 import { FormEvent, useState } from "react";
-import { useSession } from "next-auth/react";
 
 type Props = {
     chatId: string;

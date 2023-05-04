@@ -1,6 +1,4 @@
 import { db } from "@/lib/prisma";
-import { getServerSession } from "next-auth";
-import { useSession } from "next-auth/react";
 
 export async function GET(req: Request) {
     const data = db.chat.findFirst()

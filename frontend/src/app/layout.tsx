@@ -1,8 +1,6 @@
 import { SessionProvider } from '@/components/SessionProvider'
 import '../styles/globals.css'
 import SideBar from '@/components/SideBar'
-import { getServerSession } from "next-auth";
-import { authOptions } from '@/pages/api/auth/[...nextauth]';
 import Login from '@/components/Login';
 
 export const metadata = {

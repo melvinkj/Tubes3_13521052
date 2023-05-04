@@ -1,7 +1,6 @@
 "use client"
 
 import { PlusIcon } from "@heroicons/react/24/solid";
-import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 // import prisma from "../lib/prisma"
 import { db } from "../lib/prisma";
