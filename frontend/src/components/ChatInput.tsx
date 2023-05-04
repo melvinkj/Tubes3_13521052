@@ -10,7 +10,7 @@ type Props = {
 
 function ChatInput({chatId}: Props) {
     const [prompt, setPrompt] = useState("");
-    const { data: session} = useSession();
+    // const { data: session} = useSession();
 
     const sendMessage = async(e: FormEvent<HTMLFormElement>) => {
         e.preventDefault()
@@ -23,17 +23,17 @@ function ChatInput({chatId}: Props) {
             text: input,
             createdAt: serverTimestamp(),
             user: {
-                _id: session?.user?.email!, 
-                name: session?.user?.name!,
-                avatar: session?.user?.image! || 'https://ui-avatars.com/api/?name=${session?.user?.name}',
+                // _id: session?.user?.email!, 
+                // name: session?.user?.name!,
+                // avatar: session?.user?.image! || 'https://ui-avatars.com/api/?name=${session?.user?.name}',
 
             }
         }
 
-        await addDoc(
-            collection(db, 'users', session?.user.email!, 'chats', chatId, 'messages'), 
-            message
-        )
+        // await addDoc(
+        //     collection(db, 'users', session?.user.email!, 'chats', chatId, 'messages'), 
+        //     message
+        // )
 
         
 
@@ -43,14 +43,15 @@ function ChatInput({chatId}: Props) {
         <form onSubmit={e => sendMessage} className="p-5 space-x-5 flex">
             <input 
                 className="bg-transparent focus:outline-none flex-1 disabled:cursor-not-allowed disabled:text-gray-300"
-                disabled={!session}
+                // disabled={!session}
                 value={prompt}
                 onChange = {(e) => setPrompt(e.target.value)}
                 type="text" 
                 placeholder="Type your message here..."
             />
 
-            <button disabled={!prompt || !session} type="submit"
+            {/* <button disabled={!prompt || !session} type="submit" */}
+            <button disabled={!prompt} type="submit"
                 className="bg-green-300 hover:opacity-50 text-white font-bold px-4 py-2 rounded disabled:text-gray-300 disabled:cursor-not-allowed">
                 <PaperAirplaneIcon className="h-4 w-4 -rotate-45" />
             </button>

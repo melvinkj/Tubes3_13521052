@@ -8,7 +8,7 @@ import { db } from "../lib/prisma";
 
 function NewChat() {
   const router = useRouter();
-  const {data: session} = useSession();
+  // const {data: session} = useSession();
 
     const createNewChat = async() => {
         // const doc = await add();
