@@ -2,11 +2,6 @@ import { db } from "@/lib/prisma";
 
 export async function GET(req: Request) {
     console.log("GET CHAT")
-    // const data = await db.chat.findMany({
-    //     orderBy: {
-    //         chatId: "desc"
-    //     },
-    // })
     const data = await db.chat.findMany();
     // console.log(data)
 
@@ -19,7 +14,7 @@ export async function POST(req: Request) {
     
     const newChat = await db.chat.create({
         data: {
-            topic: "CONTOH-TOPIC",
+            topic: "New Topic",
         }
     })
     // const question = db.qnADataset.findFirst()
@@ -28,12 +23,13 @@ export async function POST(req: Request) {
     return new Response(JSON.stringify(newChat))
 }
 
-export async function DELETE(req: Request) {
-    console.log("DELETE API")
+// export async function DELETE(req: Request, {params,}: {params:{chat_id:number}}) {
+//     console.log("DELETE API")
 
-    const deleteChat = await db.chat.delete( {
-        where: {
-            chatId: 1,           
-        }
-    })
-}
+//     const deleteChat = await db.chat.delete( {
+//         where: {
+//             chatId: params.chat_id,           
+//         }
+//     })
+//     return new Response(JSON.stringify(deleteChat))
+// }
