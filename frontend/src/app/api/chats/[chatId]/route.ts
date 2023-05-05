@@ -31,12 +31,25 @@ export async function POST(req: Request) {
     return new Response(JSON.stringify(newChat))
 }
 
-export async function DELETE(req: Request) {
-    console.log("DELETE API")
+// export async function DELETE(req: Request) {
+//     console.log("DELETE API")
+
+//     const deleteChat = await db.chat.delete( {
+//         where: {
+//             chatId: 1,           
+//         }
+//     })
+// }
+
+export async function DELETE(req: Request, {params,}: {params:{chatId:string}}) {
+    console.log("DELETE CURRENT CHAT")
+    console.log(params)
+    console.log(params.chatId)
 
     const deleteChat = await db.chat.delete( {
         where: {
-            chatId: 1,           
+            chatId: parseInt(params.chatId),           
         }
     })
+    return new Response(JSON.stringify(deleteChat))
 }
