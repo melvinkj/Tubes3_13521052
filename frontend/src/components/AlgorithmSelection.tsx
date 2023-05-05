@@ -1,9 +1,13 @@
 import { useState } from 'react'
 import { Switch } from '@headlessui/react'
 
-function AlgorithmSelection() {
-  const [enabled, setEnabled] = useState(true)
+interface AlgorithmSelectionProps {
+    enabled: boolean;
+    setEnabled: (enabled: boolean) => void;
+  }
 
+  
+function AlgorithmSelection({ enabled, setEnabled } : AlgorithmSelectionProps) {
   return (
     <div className='flex items-center justify-center space-x-3 font-semibold'>
         <p>BM</p>
