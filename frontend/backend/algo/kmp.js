@@ -27,6 +27,7 @@ export default class KMP {
                 }
             }
         }
+        console.log(this.patternTable.toString());
     }
     
     calculate(text, pattern) {
@@ -45,14 +46,14 @@ export default class KMP {
                 i++;
             }
             if (j == patternLength) {
-                return "Success " + (i - j);
+                return (i - j);
             } else if (i < textLength && patternInput[j] != textInput[i]) {
                 if (j != 0)
                     j = this.patternTable.getElement(j - 1);
                 else
-                    i = i + 1;
+                    i++;
             }
         }
-        return "None";
+        return -1;
     }
 }

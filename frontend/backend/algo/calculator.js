@@ -10,10 +10,8 @@ export default class Calculator {
 
     evaluate(text) {
         let strtext = String(text);
-        strtext = text.replaceAll(" ", "");
         let textlength = strtext.length;
-        let currentIndex = 0,
-            result = 0;
+        let currentIndex = 0;
         let currentchar = strtext[currentIndex];
         let firstNumberNegative = false;
 

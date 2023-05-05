@@ -8,10 +8,9 @@ export default class Randomize {
     }
 
     pick(num, textchoice, length) { 
-        if (num < length) {
+        if (num <= length) {
             for (let i = 0; i < num; i++) {
                 let temp = Math.floor(Math.random() * length);
-                console.log(temp);
                 if (this.solution.indexOf(temp) == -1) {
                     this.solution.push(temp);
                 } else {

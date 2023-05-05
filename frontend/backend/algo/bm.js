@@ -34,14 +34,13 @@ export default class BoyerMoore {
             while(j >= 0 && patternInput[j] == textInput[idx + j]) {
                 j--;
             }
-            
 
             if (j < 0) {
-                return "Pattern match" + idx;
+                return idx;
             } else {
                 idx += Math.max(1, j - this.charTable.getElement(textInput[idx + j].charCodeAt(0)));
             }
         }
-        return "None";
+        return -1;
     }
 }
