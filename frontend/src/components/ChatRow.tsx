@@ -6,6 +6,7 @@ type Props = {
 import { ChatBubbleLeftIcon, TrashIcon } from '@heroicons/react/24/outline';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
+import { useLayoutEffect } from "react";
 import React, { useState, useEffect } from 'react';
 // import { PrismaClient } from "@prisma/client";
 
@@ -18,24 +19,26 @@ function ChatRow({ chatId, topic }: Props) {
   const router = useRouter();
   // const { data:session } = useSession();
   const [active, setActive] = useState(false);
+
   const [messages, setMessages] = useState<any[]>([]);
 
-  // useEffect(
-  //   () => {
-  //       const initMessages = async () => {
-  //           const response = await fetch('api/chats/${encodeURIComponent(chatId)}', {
-  //               method: "GET",
-  //           });
-  //           setMessages(await response.json())
-  //       }
+    useLayoutEffect(
+        () => {
+            const initMessages = async () => {
+                const response = await fetch(`api/chats/${encodeURIComponent(chatId)}`, {
+                    method: "GET",
+                });
+                console.log("Messages");
+                console.log(response);
+                const message = await response.json();
+                console.log(message)
+                setMessages(message)
+            }
 
-  //       initMessages();
-  //   }, []);
-
-  // const [messages] = useCollection(query(
-  //   collection(db, "users", session?.user?.email!, "chats", id, "messages"),
-  //   orderBy("createdAt", "asc")
-  // ));
+            initMessages();
+        }, [setMessages]
+    )
+    // chore: use retrived chat message
 
 
   useEffect(() => {
