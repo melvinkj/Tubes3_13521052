@@ -9,37 +9,41 @@ type Props = {
 
 function ChatInput({chatId}: Props) {
     const [prompt, setPrompt] = useState("");
-    // const { data: session} = useSession();
 
     const sendMessage = async(e: FormEvent<HTMLFormElement>) => {
         e.preventDefault()
         if (!prompt) return;
 
         const input = prompt.trim();
+        console.log(input);
+        
         setPrompt("");
 
-        // const message : Message= {
-        //     text: input,
-        //     createdAt: serverTimestamp(),
-        //     user: {
-        //         // _id: session?.user?.email!, 
-        //         // name: session?.user?.name!,
-        //         // avatar: session?.user?.image! || 'https://ui-avatars.com/api/?name=${session?.user?.name}',
-
-        //     }
-        // }
-
-        // await addDoc(
-        //     collection(db, 'users', session?.user.email!, 'chats', chatId, 'messages'), 
-        //     message
-        // )
-
+        // saves user's question message
+        const dataUser = await fetch(`/api/chats/${encodeURIComponent(chatId)}`, {
+            method: "POST",
+            body: JSON.stringify({
+                msgContent: input,
+                msgSender: "user",
+            })
+          })
         
+        // server do response processing
+        // chore: server auto answer
+
+        // dummy response
+        const dataSystem = await fetch(`/api/chats/${encodeURIComponent(chatId)}`, {
+            method: "POST",
+            body: JSON.stringify({
+                msgContent: "123456789",
+                msgSender: "system",
+            })
+          })
 
     }
   return (
     <div className="bg-gray-700/50 text-gray-400 rounded-lg text-sm">
-        <form onSubmit={e => sendMessage} className="p-5 space-x-5 flex">
+        <form onSubmit={e => sendMessage(e)} className="p-5 space-x-5 flex">
             <input 
                 className="bg-transparent focus:outline-none flex-1 disabled:cursor-not-allowed disabled:text-gray-300"
                 // disabled={!session}

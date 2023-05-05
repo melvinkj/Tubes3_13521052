@@ -43,8 +43,6 @@ function Chat({chatId}: Props) {
     {messages?.map((message) => (
       <Message msgContent={message.msgContent} msgSender={message.msgSender} />
     ))}
-    Chat{chatId}
-    Length{messages.length}
   </div>
   );
 }

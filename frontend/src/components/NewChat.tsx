@@ -12,15 +12,14 @@ function NewChat() {
 
     const createNewChat = async() => {
         // const doc = await add();
-        const data = await fetch('api/chats', {
+        const data = await fetch('/api/chats', {
           method: "POST",
         })
         console.log(data)
         const parsedData = await data.json()
         console.log(parsedData)
+        
         console.log("New Chat Created")
-        // const data2 = await supabase.from("Chat").select("*");
-        // console.log(data2)
         router.push(`/chat/${parsedData.chatId}`)
     }
   // Execute createNewChat only on the client-side

@@ -15,30 +15,21 @@ export async function GET(req: Request, { params,}: {params: {chatId:string}}) {
     return new Response(JSON.stringify(data))
 }
 
-export async function POST(req: Request) {
-    console.log("POST API")
-    // const session = getServerSession();
-    
-    const newChat = await db.chat.create({
+export async function POST(req: Request, { params,}: {params: {chatId:string}}) {
+    console.log("POST MESSAGE")
+    console.log(params.chatId)
+
+    const messageBody = JSON.parse(await req.text())
+    console.log(messageBody)
+    const newMessage = await db.chatMessageHistory.create({
         data: {
-            topic: "CONTOH-TOPIC",
+            chatId: parseInt(params.chatId),
+            msgContent: messageBody.msgContent,
+            msgSender: messageBody.msgSender,
         }
     })
-    // const question = db.qnADataset.findFirst()
-    // console.log(JSON.stringify(question))
-    // console.dir(question, {depth:null})
-    return new Response(JSON.stringify(newChat))
+    return new Response(JSON.stringify(newMessage))
 }
-
-// export async function DELETE(req: Request) {
-//     console.log("DELETE API")
-
-//     const deleteChat = await db.chat.delete( {
-//         where: {
-//             chatId: 1,           
-//         }
-//     })
-// }
 
 export async function DELETE(req: Request, {params,}: {params:{chatId:string}}) {
     console.log("DELETE CURRENT CHAT")

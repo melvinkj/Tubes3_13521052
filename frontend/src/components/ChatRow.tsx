@@ -17,7 +17,6 @@ import { db } from '@/lib/prisma';
 function ChatRow({ chatId, topic }: Props) {
   const pathname = usePathname();
   const router = useRouter();
-  // const { data:session } = useSession();
   const [active, setActive] = useState(false);
 
     // chore: use retrived chat message
@@ -31,7 +30,7 @@ function ChatRow({ chatId, topic }: Props) {
   }, [pathname]);
 
   const removeChat = async() => {
-    const data = await fetch(`api/chats/${encodeURIComponent(chatId)}`, {
+    const data = await fetch(`/api/chats/${encodeURIComponent(chatId)}`, {
       method: "DELETE",
     })
     console.log("Chat Removed")
