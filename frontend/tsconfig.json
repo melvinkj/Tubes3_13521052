@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "baseUrl": ".",
     "target": "es5",
     "lib": [
       "dom",
@@ -21,7 +22,8 @@
     "paths": {
       "@/*": [
         "./src/*"
-      ]
+      ],
+      "@headlessui/react": ["node_modules/@headlessui/react"]
     },
     "plugins": [
       {
@@ -38,4 +40,5 @@
   "exclude": [
     "node_modules"
   ]
+  
 }

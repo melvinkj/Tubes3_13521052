@@ -1,5 +1,6 @@
 "use client";
 import NewChat from "./NewChat"
+import AlgorithmSelection from "./AlgorithmSelection"
 import ChatRow from "./ChatRow";
 import { useLayoutEffect, useState } from "react";
 
@@ -24,21 +25,24 @@ function SideBar() {
         }, [setMessages]
     )
   return (
-    <div className="p-2 flex flex-col h-screen">
-        <div className="flex-1 ">
-            <div>
-                <NewChat/>
-                <div>
-                    {/* Algorithm selection */}
+    <div className="p-2 flex flex-col h-screen overflow-hidden">
+        <div className="flex-1 space-y-4 ">
+            <NewChat/>
+            <div className="h-[610px] overflow-y-auto">
+                {/* Map through the chat rows */}
+                
+                {messages.map(chat => (<ChatRow chatId={chat.chatId} topic={chat.topic}/>))}
+            </div>
+            <div className="space-y-4 p-2 rounded-lg border">
+                <div className="place-items-center">
+                    <AlgorithmSelection/>
                 </div>
-
-                <div>
-                    {/* Map through the chat rows */}
-                    
-                    {messages.map(chat => (<ChatRow chatId={chat.chatId} topic={chat.topic}/>))}
+                <div className="flex items-center justify-center space-x-3 font-extrabold">
+                    GIGAChat
                 </div>
-            </div>           
-        </div>
+            </div>
+            
+        </div>            
     </div>
   )
 }
