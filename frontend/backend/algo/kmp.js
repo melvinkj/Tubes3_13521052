@@ -27,7 +27,6 @@ export default class KMP {
                 }
             }
         }
-        console.log(this.patternTable.toString());
     }
     
     calculate(text, pattern) {

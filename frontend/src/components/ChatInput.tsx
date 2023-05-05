@@ -30,7 +30,7 @@ function ChatInput({chatId}: Props) {
           })
         
         let agent = new Agent();
-
+        const ans = await agent.process(input, true);
         // server do response processing
         // chore: server auto answer
 
@@ -62,7 +62,7 @@ function ChatInput({chatId}: Props) {
         const dataSystem = await fetch(`/api/chats/${encodeURIComponent(chatId)}`, {
             method: "POST",
             body: JSON.stringify({
-                msgContent: `${agent.process(input, true)}`,
+                msgContent: `${ans}`,
                 msgSender: "system",
             })
           })
