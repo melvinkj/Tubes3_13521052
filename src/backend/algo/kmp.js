@@ -14,7 +14,7 @@ export default class KMP {
         let len = 0;
         let i = 1;
         while (i < length) {
-            if (pattern[i] == pattern[len]) {
+            if (pattern[i].toLowerCase() == pattern[len].toLowerCase()) {
                 len++;
                 this.patternTable.setElement(i, len);
                 i++;

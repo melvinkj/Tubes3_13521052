@@ -1,11 +1,9 @@
-import { get } from "http";
 import Calculator from "./calculator.js";
 import Calendar from "./date.js";
 import Levensthein from "./levensthein.js";
 import KMP from "./kmp.js"
 import BoyerMoore from "./bm.js"
 import Randomize from "./randomize.js";
-import {Array} from "./struct/Array.js";
 
 export default class Agent {
     constructor() {
@@ -77,24 +75,6 @@ export default class Agent {
                 return "Bukan sebuah range atau enumerasi!";
             }
 
-            
-        // const insertQuestion = await fetch(`/api/questions`, {
-        //     method: "POST",
-        //     body: JSON.stringify({
-        //         question: "Kami sedang dimana",
-        //         answer: "di CIBE",
-        //     })
-        // })
-        // const updateQA = await fetch(`/api/questions`, {
-        //     method: "PUT",
-        //     body: JSON.stringify({
-        //         question: "Kami sedang dimana",
-        //         answer: "bukan di CIBE",
-        //     })
-        // })
-        // const deleteQA = await fetch(`/api/questions/${"Kami sedang dimana"}`, {
-        //     method: "DELETE",
-        // })
         } else if (this.prompt.search(/Tambahkan pertanyaan.*dengan jawaban/i) == 0) {
             let a = this.prompt.substring(this.prompt.search(/dengan jawaban/i) + 15);
             this.prompt = this.prompt.substring(0, this.prompt.search(/dengan jawaban/i));
@@ -156,10 +136,6 @@ export default class Agent {
         }else if (this.prompt.search(/Hapus pertanyaan/i) == 0) {
             let q = this.prompt.substring(17);
 
-            const deleteQA = await fetch(`/api/questions/${"kami sedang dimana"}`, {
-                method: "DELETE",
-            })
-            return "hehe";
             const getQuestion = await fetch(`/api/questions`, {
                 method: "GET",
             });
@@ -188,13 +164,13 @@ export default class Agent {
                 const deleteQA = await fetch(`/api/questions/${encodeURIComponent(q)}`, {
                     method: "DELETE",
                 })
-                return "Pertanyaan " + q + " berhasil di hapus";
+                return "Pertanyaan " + q + " sedang di hapus";
             } else {
                 if (Math.min(levdis) < 0.1) {
                     const deleteQA = await fetch(`/api/questions/${array[levdis.indexOf(Math.min(...levdis))].question}`, {
                         method: "DELETE",
                     })
-                    return "Pertanyaan " + q + " berhasil di hapus";
+                    return "Pertanyaan " + q + " sedang di hapus";
                 } else {
                     let text = "Pertanyaan gagal dihapus! Mungkin maksud Anda:\n";
                     for (let i = 0; i < 3; i++) {
@@ -248,23 +224,3 @@ export default class Agent {
         }
     }
 }
-
-
-// var x = new Calculator();
-// console.log(x.evaluate("1+2+3"));
-
-// var x = new Randomize();
-// var y = new Array([1,2,3,4,5,6,7,8]);
-// console.log(x.pick(5, ["eugene", "yap", "jin", "quan"], 4));
-
-// var x = new Calendar;
-// console.log(x.getDay("2023-05-03"));
-
-// var x = new Levensthein();
-// console.log(x.calculate("Bagaimana caranya menjadi seorang", "Bagaimana caranya menjadi seekor"))
-
-// var x = new KMP()
-// console.log(x.calculate("ABABDABACDABABCABAB", "ABAABA"))
-
-// var x = new BoyerMoore()
-// console.log(x.calculate("ABAAABCD", "ABC"))

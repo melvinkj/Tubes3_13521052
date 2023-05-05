@@ -13,7 +13,7 @@ function Message({msgContent, msgSender}: Props) {
   return (
     <div className={`py-5 text-white ${isChatGPT && "bg-slate-600"}`}>
         <div className="flex space-x-5 px-10 max-w-2xl mx-auto">
-            <p className="pt-1 text-sm"> {msgElements}</p>
+            <p className="pt-1 text-sm overflow-hidden overflow-ellipsis whitespace-wrap break-words"> {msgElements}</p>
         </div>
     </div>
   );

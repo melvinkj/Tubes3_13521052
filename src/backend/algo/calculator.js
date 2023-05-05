@@ -1,4 +1,4 @@
-// Class Stack
+// Class Calculator
 import {Array} from "./struct/Array.js";
 
 export default class Calculator {

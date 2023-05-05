@@ -1,4 +1,4 @@
-// Class Stack
+// Class Randomize
 import {Array} from "./struct/Array.js";
 
 export default class Randomize {
