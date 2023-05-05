@@ -4,7 +4,7 @@ import { PaperAirplaneIcon } from "@heroicons/react/24/solid";
 import { FormEvent, useState } from "react";
 
 type Props = {
-    chatId: string;
+    chatId: number;
 }
 
 function ChatInput({chatId}: Props) {
@@ -18,16 +18,16 @@ function ChatInput({chatId}: Props) {
         const input = prompt.trim();
         setPrompt("");
 
-        const message : Message= {
-            text: input,
-            createdAt: serverTimestamp(),
-            user: {
-                // _id: session?.user?.email!, 
-                // name: session?.user?.name!,
-                // avatar: session?.user?.image! || 'https://ui-avatars.com/api/?name=${session?.user?.name}',
+        // const message : Message= {
+        //     text: input,
+        //     createdAt: serverTimestamp(),
+        //     user: {
+        //         // _id: session?.user?.email!, 
+        //         // name: session?.user?.name!,
+        //         // avatar: session?.user?.image! || 'https://ui-avatars.com/api/?name=${session?.user?.name}',
 
-            }
-        }
+        //     }
+        // }
 
         // await addDoc(
         //     collection(db, 'users', session?.user.email!, 'chats', chatId, 'messages'), 
