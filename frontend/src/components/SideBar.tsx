@@ -1,14 +1,33 @@
 "use client";
 import NewChat from "./NewChat"
 import ChatRow from "./ChatRow";
-// import { useCollection } from "react-firebase-hooks/firestore";
-// import { db } from "../firebase";
+import { useEffect, useState } from "react";
+import { db } from "@/lib/prisma";
+import Chat from "./Chat";
 
 function SideBar() {
     // const { data:session } = useSession();
 
+    const [messages, setMessages] = useState<any[]>([]);
+
+    useEffect(
+        () => {
+            const initMessages = async () => {
+                const response = await fetch('api/chats', {
+                    method: "GET",
+                });
+                setMessages(await response.json())
+            }
+
+            initMessages();
+        }
+    )
+    // const chats = await db.chats.findMany({
+    //     orderBy: { createdAt: "asc" },
+    //   });
+
     // const [chats, loading, error] = useCollection(){
-    //     session && collection(db, "users", session.user?.email!, "chats"), orderBy("createdAt", "asc")
+    //     collection(db, "users", "chats"), orderBy("createdAt", "asc")
     // };
 
     // console.log(chats);
@@ -27,6 +46,8 @@ function SideBar() {
                     {/* {chats?.docs.map(chat => (
                         <ChatRow key={chat.id} id={chat.id} />
                     ))} */}
+                    {/* {messages.map(chat => (<ChatRow chatId={chat.chatId}/>))} */}
+                    <ChatRow chatId={1} topic={"ayam"}/>
                     {/* chore: update chat view from db */}
                 </div>
             </div>           

@@ -4,19 +4,20 @@ import { PlusIcon } from "@heroicons/react/24/solid";
 import { useRouter } from "next/navigation";
 // import prisma from "../lib/prisma"
 import { db } from "../lib/prisma";
-import supabase from "../../supabase";
+import supabase from "@/lib/supabase";
+
 function NewChat() {
   const router = useRouter();
   // const {data: session} = useSession();
 
     const createNewChat = async() => {
         // const doc = await add();
-        // const data = await db.chat.findFirst()
         const data = await fetch('api/chats', {
           method: "POST",
         })
-        // const data = await supabase.from("Chat").insert({topic: "New Topic"})
         console.log("something")
+        const data2 = await supabase.from("Chat").select("*");
+        console.log(data2)
     }
   // Execute createNewChat only on the client-side
   if (typeof window !== 'undefined') {
