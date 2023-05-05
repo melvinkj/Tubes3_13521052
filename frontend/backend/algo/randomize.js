@@ -18,10 +18,18 @@ export default class Randomize {
                 }
             }
             let ret = "Saya memilih ";
-            for (let i = 1; i < this.solution.length()-1; i++) {
-                ret += textchoice[this.solution.getElement(i)] + ",";
+            for (let i = 0; i < this.solution.length(); i++) {
+                ret += textchoice[this.solution.getElement(i)] 
+                if (i < this.solution.length()-2) {
+                    ret += ", ";
+                }
+                if (i == this.solution.length()-2 && this.solution.length() > 2) {
+                    ret += ", dan ";
+                }
+                if (i == this.solution.length()-2 && this.solution.length() > 1) {
+                    ret += " dan ";
+                }
             }
-            ret += textchoice[this.solution.getElement(this.solution.length()-1)];
             return ret;
         } else {
             return "Ga bisa milih! Jumlah pilihan terlalu sedikit"

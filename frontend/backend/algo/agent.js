@@ -26,7 +26,7 @@ export default class Agent {
             let m = this.prompt.substring(0, this.prompt.search(/[\/-]/));
             this.prompt = this.prompt.substring(this.prompt.search(/[\/-]/) + 1);
             return tool.getDay(d, m, this.prompt);
-        } else if (this.prompt.search(/\bhitung/i) != -1 || this.prompt.search(/\b([0-9]+[+-/^*])*[0-9]+/i) != -1 || this.prompt.search(/\bberapa/i) != -1) {
+        } else if (this.prompt.search(/\bhitung/i) != -1 || this.prompt.search(/\bberapa/i) != -1) {
             tool = new Calculator(mode);
             if (this.prompt.search(/\bhitung/i) != -1) {
                 res = tool.evaluate(this.prompt.substring(this.prompt.search(/\bhitung/i) + 6));
