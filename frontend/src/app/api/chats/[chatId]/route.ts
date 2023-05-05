@@ -9,9 +9,6 @@ export async function GET(req: Request, { params,}: {params: {chatId:string}}) {
         where: {
             chatId: parseInt(chatId)
         },
-        orderBy: {
-            chatId: "asc"
-        },
     })
     console.log(data)
 

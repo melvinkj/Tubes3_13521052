@@ -1,28 +1,37 @@
+'use client'
 import { ArrowDownCircleIcon } from "@heroicons/react/24/outline";
 import Message from "./Message";
+import { useLayoutEffect, useState } from "react";
 
 type Props = {
-    chatId: string;
+    chatId: number;
 }
 
 function Chat({chatId}: Props) {
-  // const { data: session } = useSession();
-  const [messages] = useCollection(
-    query(
-      collection(
-        db,
-        "users",
-        "chats",
-        chatId,
-        "messages"
-      ),
-      orderBy("createdAt", "asc")
-    )
-  );
+
+  const [messages, setMessages] = useState<any[]>([]);
+
+  useLayoutEffect(
+      () => {
+          const initMessages = async () => {
+              const response = await fetch(`/api/chats/${encodeURIComponent(chatId)}`, {
+                  method: "GET",
+              });
+              console.log("Messages");
+              console.log(response);
+              const message = await response.json();
+              console.log(message)
+              setMessages(message)
+          }
+
+          initMessages();
+      }, [setMessages]
+  )
+
 
   return (
   <div className="flex-1 overflow-y-auto overflow-x-hidden">
-    {messages?.empty && (
+    {messages?.length == 0 && (
       <>
         <p className="mt-10 text-center text-white">
           Type a prompt in below to get started!
@@ -31,9 +40,11 @@ function Chat({chatId}: Props) {
       </>
     )}
 
-    {messages?.docs.map((message) => (
-      <Message key={message.id} message={message.data()} />
+    {messages?.map((message) => (
+      <Message msgContent={message.msgContent} msgSender={message.msgSender} />
     ))}
+    Chat{chatId}
+    Length{messages.length}
   </div>
   );
 }

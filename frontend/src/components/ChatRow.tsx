@@ -20,24 +20,6 @@ function ChatRow({ chatId, topic }: Props) {
   // const { data:session } = useSession();
   const [active, setActive] = useState(false);
 
-  const [messages, setMessages] = useState<any[]>([]);
-
-    useLayoutEffect(
-        () => {
-            const initMessages = async () => {
-                const response = await fetch(`api/chats/${encodeURIComponent(chatId)}`, {
-                    method: "GET",
-                });
-                console.log("Messages");
-                console.log(response);
-                const message = await response.json();
-                console.log(message)
-                setMessages(message)
-            }
-
-            initMessages();
-        }, [setMessages]
-    )
     // chore: use retrived chat message
 
 
@@ -55,6 +37,7 @@ function ChatRow({ chatId, topic }: Props) {
     console.log("Chat Removed")
     console.log(chatId)
     router.replace("/");
+
   };
 
   return (

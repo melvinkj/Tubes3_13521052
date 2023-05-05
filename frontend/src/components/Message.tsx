@@ -1,15 +1,14 @@
-import { DocumentData } from "firebase/firestore";
-
 type Props = {
-    message: DocumentData
+    msgContent : String;
+    msgSender : String;
 }
 
-function Message({ message }: Props) {
-    const isChatGPT = message.user.name == "ChatGPT";
+function Message({msgContent, msgSender}: Props) {
+    const isChatGPT = msgSender === "\"system\"";
   return (
-    <div className={"py-5 text-white ${isChatGPT && "bg-slate-600"}"}>
+    <div className={`py-5 text-white ${isChatGPT && "bg-slate-600"}`}>
         <div className="flex space-x-5 px-10 max-w-2xl mx-auto">
-            <p className="pt-1 text-sm"> {message.text}</p>
+            <p className="pt-1 text-sm"> {msgContent}{msgSender}</p>
         </div>
     </div>
   );
