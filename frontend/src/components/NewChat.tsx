@@ -2,16 +2,11 @@
 
 import { PlusIcon } from "@heroicons/react/24/solid";
 import { useRouter } from "next/navigation";
-// import prisma from "../lib/prisma"
-import { db } from "../lib/prisma";
-// import supabase from "@/lib/supabase";
 
 function NewChat() {
   const router = useRouter();
-  // const {data: session} = useSession();
 
     const createNewChat = async() => {
-        // const doc = await add();
         const data = await fetch('/api/chats', {
           method: "POST",
         })
