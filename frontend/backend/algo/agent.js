@@ -1,6 +1,9 @@
+import { get } from "http";
 import Calculator from "./calculator.js";
 import Calendar from "./date.js";
 import Levensthein from "./levensthein.js";
+import KMP from "./kmp.js"
+import BoyerMoore from "./bm.js"
 import Randomize from "./randomize.js";
 import {Array} from "./struct/Array.js";
 
@@ -8,15 +11,17 @@ export default class Agent {
     constructor() {
         this.prompt = "";
         this.mode = true; // TRUE FOR KMP, FALSE FOR BM
+        this.kmp = new KMP();
+        this.bm = new BoyerMoore();
     }
 
-    process(text, mode) {
+    async process(text, mode) {
         let tool;
         let res;
         this.prompt = text;
         this.mode = mode;
-        this.prompt = this.prompt.replaceAll(" ", "");
         if (this.prompt.search(/[0-9]{1,2}[\/-][0-9]{1,2}[\/-][0-9]{4}/i) != -1 || this.prompt.search(/\bhariapa[0-9]{1,2}[\/-][0-9]{1,2}[\/-][0-9]{4}/i) != -1) {
+            this.prompt = this.prompt.replaceAll(" ", "");
             tool = new Calendar();
             if (this.prompt.search(/\bhariapa[0-9]{1,2}[\/-][0-9]{1,2}[\/-][0-9]{4}/i) != -1) {
                 this.prompt = this.prompt.substring(7);
@@ -26,7 +31,8 @@ export default class Agent {
             let m = this.prompt.substring(0, this.prompt.search(/[\/-]/));
             this.prompt = this.prompt.substring(this.prompt.search(/[\/-]/) + 1);
             return tool.getDay(d, m, this.prompt);
-        } else if (this.prompt.search(/\bhitung/i) != -1 || this.prompt.search(/\b([0-9]+[+-/^*])*[0-9]+/i) != -1 || this.prompt.search(/\bberapa/i) != -1) {
+        } else if (this.prompt.search(/\bhitung/i) != -1 || this.prompt.search(/\bberapa/i) != -1) {
+            this.prompt = this.prompt.replaceAll(" ", "");
             tool = new Calculator(mode);
             if (this.prompt.search(/\bhitung/i) != -1) {
                 res = tool.evaluate(this.prompt.substring(this.prompt.search(/\bhitung/i) + 6));
@@ -34,7 +40,8 @@ export default class Agent {
                 res = tool.evaluate(this.prompt);
             }           
             return isNaN(res) ? "Perhitungan tidak valid": res;
-        } else if (this.prompt.search(/\bpilih[0-9]+dari/i) != -1) {
+        } else if (this.prompt.search(/\bpilih.*[0-9]+.*dari/i) != -1) {
+            this.prompt = this.prompt.replaceAll(" ", "");
             this.prompt = this.prompt.substring(5);
             console.log(this.prompt);
             let num = 0;
@@ -58,6 +65,7 @@ export default class Agent {
                     return "Batas atas lebih tinggi dari batas bawah!";
                 }         
             } else if (this.prompt.search(/([\w]+,)+\w+/i) == 0) {
+                this.prompt = this.prompt.replaceAll(" ", "");
                 while (this.prompt.search(',') != -1) {
                     choice.push(this.prompt.substring(0, this.prompt.search(',')));
                     this.prompt = this.prompt.substring(this.prompt.search(',')+1);
@@ -67,15 +75,62 @@ export default class Agent {
             } else {
                 return "Bukan sebuah range atau enumerasi!";
             }
+
+            
+        // const insertQuestion = await fetch(`/api/questions`, {
+        //     method: "POST",
+        //     body: JSON.stringify({
+        //         question: "Kami sedang dimana",
+        //         answer: "di CIBE",
+        //     })
+        // })
+        // const updateQA = await fetch(`/api/questions`, {
+        //     method: "PUT",
+        //     body: JSON.stringify({
+        //         question: "Kami sedang dimana",
+        //         answer: "bukan di CIBE",
+        //     })
+        // })
+        // const deleteQA = await fetch(`/api/questions/${"Kami sedang dimana"}`, {
+        //     method: "DELETE",
+        // })
+        } else if (this.prompt.search(/Tambahkan/i) == 0) {
+            const getQuestion = await fetch(`/api/questions`, {
+                method: "GET",
+            });
+            const array = await getQuestion.json();
+            return array[0].question;
         } else {
-            return "Masukkan tidak valid";
+            const getQuestion = await fetch(`/api/questions`, {
+                method: "GET",
+            });
+            const array = await getQuestion.json();
+
+            let ans = -1;
+            let idx = 0;
+            let found = false;
+            array.forEach(element => {
+                let i;
+                if (this.mode) {
+                    i = this.kmp.calculate(element.question, this.prompt);
+                } else {
+                    i = this.bm.calculate(element.question, this.prompt);
+                }
+                if (i != -1 && !found) {
+                    ans = idx;
+                    found = true;
+                } 
+                idx++;
+            });
+            if (ans != -1) {
+                return String(array[ans].answer);
+            } else {
+                return "Masukkan tidak valid";
+            }
         }
     }
 }
 
-
-let agent = new Agent();
-console.log(agent.process("1*2+2+3+4", true));
 
 // var x = new Calculator();
 // console.log(x.evaluate("1+2+3"));
