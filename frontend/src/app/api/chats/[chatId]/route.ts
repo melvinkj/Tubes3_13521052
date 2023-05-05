@@ -33,7 +33,7 @@ export async function POST(req: Request, { params,}: {params: {chatId:string}}) 
 
 export async function DELETE(req: Request, {params,}: {params:{chatId:string}}) {
     console.log("DELETE CURRENT CHAT")
-    console.log(params)
+    // console.log(params)
     console.log(params.chatId)
 
     const deleteChat = await db.chat.delete( {
