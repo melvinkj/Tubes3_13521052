@@ -2,11 +2,12 @@ import { db } from "@/lib/prisma";
 
 export async function GET(req: Request) {
     console.log("GET CHAT")
-    const data = await db.chat.findMany({
-        orderBy: {
-            chatId: "desc"
-        },
-    })
+    // const data = await db.chat.findMany({
+    //     orderBy: {
+    //         chatId: "desc"
+    //     },
+    // })
+    const data = await db.chat.findMany();
     // console.log(data)
 
     return new Response(JSON.stringify(data))

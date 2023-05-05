@@ -20,17 +20,17 @@ function ChatRow({ chatId, topic }: Props) {
   const [active, setActive] = useState(false);
   const [messages, setMessages] = useState<any[]>([]);
 
-  useEffect(
-    () => {
-        const initMessages = async () => {
-            const response = await fetch('api/chats/${encodeURIComponent(chatId)}', {
-                method: "GET",
-            });
-            setMessages(await response.json())
-        }
+  // useEffect(
+  //   () => {
+  //       const initMessages = async () => {
+  //           const response = await fetch('api/chats/${encodeURIComponent(chatId)}', {
+  //               method: "GET",
+  //           });
+  //           setMessages(await response.json())
+  //       }
 
-        initMessages();
-    }, []);
+  //       initMessages();
+  //   }, []);
 
   // const [messages] = useCollection(query(
   //   collection(db, "users", session?.user?.email!, "chats", id, "messages"),
@@ -51,6 +51,7 @@ function ChatRow({ chatId, topic }: Props) {
     if (!pathname) return;
 
     setActive(pathname.includes("${chatId}"));
+    // chore: view for single chat session
   }, [pathname]);
 
   const removeChat = async() => {
