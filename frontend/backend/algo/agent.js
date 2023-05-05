@@ -13,6 +13,7 @@ export default class Agent {
         this.mode = true; // TRUE FOR KMP, FALSE FOR BM
         this.kmp = new KMP();
         this.bm = new BoyerMoore();
+        this.lev = new Levensthein();
     }
 
     async process(text, mode) {
@@ -94,12 +95,116 @@ export default class Agent {
         // const deleteQA = await fetch(`/api/questions/${"Kami sedang dimana"}`, {
         //     method: "DELETE",
         // })
-        } else if (this.prompt.search(/Tambahkan/i) == 0) {
+        } else if (this.prompt.search(/Tambahkan pertanyaan.*dengan jawaban/i) == 0) {
+            let a = this.prompt.substring(this.prompt.search(/dengan jawaban/i) + 15);
+            this.prompt = this.prompt.substring(0, this.prompt.search(/dengan jawaban/i));
+            let q = this.prompt.substring(21);
+
             const getQuestion = await fetch(`/api/questions`, {
                 method: "GET",
             });
             const array = await getQuestion.json();
-            return array[0].question;
+
+            let ans = -1;
+            let idx = 0;
+            let found = false;
+            let levdis = []
+            array.forEach(element => {
+                let i;
+                if (this.mode) {
+                    i = this.kmp.calculate(element.question, q);
+                } else {
+                    i = this.bm.calculate(element.question, q);
+                }
+                if (i != -1 && !found) {
+                    ans = idx;
+                    found = true;
+                } 
+                levdis.push(this.lev.calculate(element.question, q));
+                idx++;
+            });
+            if (ans != -1) {
+                const updateQA = await fetch(`/api/questions`, {
+                    method: "PUT",
+                    body: JSON.stringify({
+                        question: q,
+                        answer: a,
+                    })
+                })
+                return "Jawaban pertanyaan berhasil update";
+            } else {
+                if (Math.min(levdis) < 0.1) {
+                    const updateQA = await fetch(`/api/questions`, {
+                        method: "PUT",
+                        body: JSON.stringify({
+                            question: array[levdis.indexOf(Math.min(...levdis))].question,
+                            answer: a,
+                        })
+                    })
+                    return "Jawaban pertanyaan berhasil update";
+                } else {
+                    const insertQuestion = await fetch(`/api/questions`, {
+                                                        method: "POST",
+                                                        body: JSON.stringify({
+                                                            question: q,
+                                                            answer: a,
+                                                        })
+                                                    })
+                    return "Pertanyaan berhasil ditambahkan";
+                }
+            }
+        }else if (this.prompt.search(/Hapus pertanyaan/i) == 0) {
+            let q = this.prompt.substring(17);
+
+            const deleteQA = await fetch(`/api/questions/${"kami sedang dimana"}`, {
+                method: "DELETE",
+            })
+            return "hehe";
+            const getQuestion = await fetch(`/api/questions`, {
+                method: "GET",
+            });
+            const array = await getQuestion.json();
+
+            let ans = -1;
+            let idx = 0;
+            let found = false;
+            let levdis = []
+            array.forEach(element => {
+                let i;
+                if (this.mode) {
+                    i = this.kmp.calculate(element.question, q);
+                } else {
+                    i = this.bm.calculate(element.question, q);
+                }
+                if (i != -1 && !found) {
+                    ans = idx;
+                    found = true;
+                } 
+                levdis.push(this.lev.calculate(element.question, q));
+                idx++;
+            });
+            if (ans != -1) {
+                console.log(q);
+                const deleteQA = await fetch(`/api/questions/${encodeURIComponent(q)}`, {
+                    method: "DELETE",
+                })
+                return "Pertanyaan " + q + " berhasil di hapus";
+            } else {
+                if (Math.min(levdis) < 0.1) {
+                    const deleteQA = await fetch(`/api/questions/${array[levdis.indexOf(Math.min(...levdis))].question}`, {
+                        method: "DELETE",
+                    })
+                    return "Pertanyaan " + q + " berhasil di hapus";
+                } else {
+                    let text = "Pertanyaan gagal dihapus! Mungkin maksud Anda:\n";
+                    for (let i = 0; i < 3; i++) {
+                        let temp = array[levdis.indexOf(Math.min(...levdis))];
+                        text += String(i+1) + ". " + String(temp.question) + "\n";
+                        levdis[levdis.indexOf(Math.min(...levdis))] = 1;
+                    }
+                    return text;
+                }
+            }
         } else {
             const getQuestion = await fetch(`/api/questions`, {
                 method: "GET",
@@ -109,6 +214,7 @@ export default class Agent {
             let ans = -1;
             let idx = 0;
             let found = false;
+            let levdis = []
             array.forEach(element => {
                 let i;
                 if (this.mode) {
@@ -120,12 +226,24 @@ export default class Agent {
                     ans = idx;
                     found = true;
                 } 
+                levdis.push(this.lev.calculate(element.question, this.prompt));
                 idx++;
             });
             if (ans != -1) {
                 return String(array[ans].answer);
             } else {
-                return "Masukkan tidak valid";
+                if (Math.min(levdis) < 0.1) {
+                    console.log(array[levdis.indexOf(Math.min(...levdis))]);
+                    return array[levdis.indexOf(Math.min(...levdis))].answer;
+                } else {
+                    let text = "Masukkan tidak valid! Mungkin maksud Anda:\n";
+                    for (let i = 0; i < 3; i++) {
+                        let temp = array[levdis.indexOf(Math.min(...levdis))];
+                        text += String(i+1) + ". " + String(temp.question) + "\n";
+                        levdis[levdis.indexOf(Math.min(...levdis))] = 1;
+                    }
+                    return text;
+                }
             }
         }
     }

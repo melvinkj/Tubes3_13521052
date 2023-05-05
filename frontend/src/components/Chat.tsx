@@ -18,9 +18,7 @@ function Chat({chatId}: Props) {
                   method: "GET",
               });
               console.log("Messages");
-              console.log(response);
               const message = await response.json();
-              console.log(message)
               setMessages(message)
           }
 

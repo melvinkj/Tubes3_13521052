@@ -14,9 +14,7 @@ function SideBar() {
                     method: "GET",
                 });
                 console.log("Init messages");
-                console.log(response);
                 const message = await response.json();
-                console.log(message)
                 setMessages(message)
             }
 

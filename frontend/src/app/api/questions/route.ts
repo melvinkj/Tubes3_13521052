@@ -13,7 +13,6 @@ export async function POST(req: Request) {
     console.log("POST NEW QUESTION-ANSWER")
 
     const questionAnswer = JSON.parse(await req.text())
-    console.log(questionAnswer)
     const newQA = await db.qnADataset.create({
         data: {
             question: questionAnswer.question,
@@ -27,7 +26,6 @@ export async function PUT(req: Request) {
     console.log("UPDATE A QUESTION-ANSWER")
 
     const questionAnswer = JSON.parse(await req.text())
-    console.log(questionAnswer)
     const updateQA = await db.qnADataset.update( {
         where: {
             question: questionAnswer.question,           

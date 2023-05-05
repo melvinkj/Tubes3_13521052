@@ -20,7 +20,6 @@ export async function POST(req: Request, { params,}: {params: {chatId:string}}) 
     console.log(params.chatId)
 
     const messageBody = JSON.parse(await req.text())
-    console.log(messageBody)
     const newMessage = await db.chatMessageHistory.create({
         data: {
             chatId: parseInt(params.chatId),
