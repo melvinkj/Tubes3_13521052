@@ -4,7 +4,7 @@ import ChatInput from '@/components/ChatInput'
 
 type Props = {
     params: {
-        id: string;
+        id: number;
     }
 }
 function ChatPage({params: {id}} : Props) {
