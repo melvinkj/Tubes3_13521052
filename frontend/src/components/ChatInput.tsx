@@ -38,7 +38,7 @@ function ChatInput({chatId}: Props) {
         let agent = new Agent();
         const ans = await agent.process(input, enabled);
         
-        // dummy response
+        // save system's response to db
         const dataSystem = await fetch(`/api/chats/${encodeURIComponent(chatId)}`, {
             method: "POST",
             body: JSON.stringify({

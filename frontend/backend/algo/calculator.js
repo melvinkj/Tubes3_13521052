@@ -56,7 +56,6 @@ export default class Calculator {
                     divisor *= 10
                 }
             } 
-            // (parseInt(strtext[i]) == NaN)
             if (parseNumber) {
                 this.number.push(number1);
             }

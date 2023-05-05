@@ -8,18 +8,11 @@ import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import { useLayoutEffect } from "react";
 import React, { useState, useEffect } from 'react';
-// import { PrismaClient } from "@prisma/client";
-
-import { db } from '@/lib/prisma';
-
-// const prisma = new PrismaClient()
 
 function ChatRow({ chatId, topic }: Props) {
   const pathname = usePathname();
   const router = useRouter();
   const [active, setActive] = useState(false);
-
-    // chore: use retrived chat message
 
 
   useEffect(() => {
