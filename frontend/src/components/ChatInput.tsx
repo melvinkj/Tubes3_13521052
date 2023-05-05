@@ -2,6 +2,7 @@
 
 import { PaperAirplaneIcon } from "@heroicons/react/24/solid";
 import { FormEvent, useState } from "react";
+import Agent from "../../backend/algo/agent.js";
 
 type Props = {
     chatId: number;
@@ -28,6 +29,8 @@ function ChatInput({chatId}: Props) {
             })
           })
         
+        let agent = new Agent();
+
         // server do response processing
         // chore: server auto answer
 
@@ -35,7 +38,7 @@ function ChatInput({chatId}: Props) {
         const dataSystem = await fetch(`/api/chats/${encodeURIComponent(chatId)}`, {
             method: "POST",
             body: JSON.stringify({
-                msgContent: "123456789",
+                msgContent: `${agent.process(input, true)}`,
                 msgSender: "system",
             })
           })
