@@ -31,7 +31,7 @@ export default class BoyerMoore {
         
         while(idx <= (textLength - patternLength)) {
             let j = patternLength - 1;
-            while(j >= 0 && patternInput[j] == textInput[idx + j]) {
+            while(j >= 0 && patternInput[j].toLowerCase() == textInput[idx + j].toLowerCase()) {
                 j--;
             }
 
